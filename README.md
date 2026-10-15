@@ -12,3 +12,4 @@ Cloudflare Worker + Durable Object für private 2-Spieler-Tetrisräume.
 **Achtung:** Das ist der Server, noch nicht die fertige Online-Version des Spiels. Der vorhandene HTML-Client benötigt eine kleine Anpassung, um `/room/CODE` anzusprechen und `hello` zu senden. Es gibt noch keine öffentliche Lobby, Benutzerkonten oder Anti-Cheat-Sicherung.
 
 **Kosten:** Deployment nur im Cloudflare-Free-Tarif vornehmen; Limits und mögliche Gebühren vor einem Upgrade prüfen. Die kostenlose Bereitstellung ist nicht unbegrenzt.
+STACK POT ONLINE V154 - First server deployment
