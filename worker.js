@@ -111,4 +111,38 @@ export class GameRoom extends DurableObject {
   }
 
   remove(s) {
-    const
+    const other = this.peer(s);
+    if (other) {
+      const p = this.players.get(other);
+      p.peer = null;
+      this.save(other);
+      send(other, { type: 'left' });
+    }
+    this.players.delete(s);
+  }
+
+  async webSocketClose(s) { this.remove(s); }
+  async webSocketError(s) { this.remove(s); }
+}
+
+export default {
+  async fetch(req, env) {
+    const url = new URL(req.url);
+
+    if (url.pathname === '/health')
+      return Response.json({
+        ok: true,
+        app: 'STACK POT',
+        matchmaking: true
+      });
+
+    if (req.headers.get('Upgrade')?.toLowerCase() !== 'websocket')
+      return new Response('STACK POT matchmaking online');
+
+    if (url.pathname !== '/match')
+      return new Response('Use /match', { status: 400 });
+
+    const id = env.GAME_ROOMS.idFromName('PUBLIC_MATCHMAKING_V155');
+    return env.GAME_ROOMS.get(id).fetch(req);
+  }
+};
